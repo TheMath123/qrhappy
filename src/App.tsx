@@ -46,8 +46,11 @@ export default function App() {
 
   return(
     <div>
-      <QRCode options={options} />
-      <button onClick={mudaOp}>Click</button>
+      <h1>Hello world</h1>
     </div>
+    // <div>
+    //   <QRCode options={options} />
+    //   <button onClick={mudaOp}>Click</button>
+    // </div>
   )
 }
