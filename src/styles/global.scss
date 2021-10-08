@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+// Button
+button {
+  border: .1rem solid #a0a0a0;
+  border-radius: .6rem;
+  background: #67d303;
+  padding: .3rem .5rem;
+
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #1f1e1e;
+
+  cursor: pointer;
+  transition: filter .2s;
+}
+
+button:hover {
+  filter: brightness(.93)
+}
+
+//input
+input {
+  outline: none;
+  border: 1px solid #a0a0a0;
+  border-radius: .6rem;
+  padding: .3rem 1rem;
+
+  font-weight: 500;
+  font-size: 1rem;
+  color: #1f1e1e;
+
+  -webkit-appearance: none;
+
+  transition: border .2s;
+}
+
+input:focus {
+  border: 1px solid #67d303;
+}
+
+input[type=number]::-webkit-inner-spin-button {  //remover setas do input number
+  -webkit-appearance: none;
+}
