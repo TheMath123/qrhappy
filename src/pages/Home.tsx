@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react'
 import styles from '../styles/Home.module.scss'
 
-import { getDatabase, ref, set } from "firebase/database";
+import { database } from '../services/firebase';
 
 export function Home(){
   const [ name, setName] = useState('')
@@ -23,8 +23,9 @@ export function Home(){
 
   //Salvar dado no bd
   function writeUserData() {
-    const db = getDatabase();
-    set(ref(db, 'users/' + getHash()), {
+    const userRef = database.ref('users')
+
+    const user = await userRef.push({
       name,
       surname,
       phoneNumber,
