@@ -12,11 +12,6 @@ export function Home(){
 
   const { users } = useUsers()
 
-  //Gerar hash
-  // function getHash(){
-  //   return Math.floor(Math.random()*3123312)
-  // }
-
   //Cadastrar pessoa
   function handlerSubmit(event: FormEvent) {
     event.preventDefault()
