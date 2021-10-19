@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react'
 import styles from '../styles/Home.module.scss'
 
 import { database } from '../services/firebase';
+import { useUsers } from '../hooks/useUsers';
 
 export function Home(){
   const [ name, setName] = useState('')
@@ -9,10 +10,12 @@ export function Home(){
   const [ phoneNumber, setPhoneNumber ] = useState('')
   const [ email, setEmail ] = useState('')
 
+  const { users } = useUsers()
+
   //Gerar hash
-  function getHash(){
-    return Math.floor(Math.random()*3123312)
-  }
+  // function getHash(){
+  //   return Math.floor(Math.random()*3123312)
+  // }
 
   //Cadastrar pessoa
   function handlerSubmit(event: FormEvent) {
@@ -22,58 +25,76 @@ export function Home(){
   }
 
   //Salvar dado no bd
-  function writeUserData() {
+  async function writeUserData() {
     const userRef = database.ref('users')
 
-    const user = await userRef.push({
+    await userRef.push({
       name,
       surname,
       phoneNumber,
       email
     });
+
+    console.log('Cadastrado com sucesso!')
   }
-  
 
   return(
     <div className={styles.container}>
 
-        <form className={styles.create} onSubmit={handlerSubmit}>
-          <div className={styles.dName}>
-            <input 
-              type="text"
-              id="name"
-              placeholder="Nome"
-              value={name}
-              onChange={e => {setName(e.target.value)}}
-            />
-            <input
-              type="text"
-              id="sobrenome"
-              placeholder="Sobrenome"
-              value={surname}
-              onChange={e => {setSurname(e.target.value)}}
-            />
-          </div>
-
+      <form className={styles.boxCreate} onSubmit={handlerSubmit}>
+        <div className={styles.dName}>
           <input 
-            type="number"
-            id="numero"
-            placeholder="Num. Telefone"
-            value={phoneNumber}
-            onChange={e => {setPhoneNumber(e.target.value)}}
+            type="text"
+            id="name"
+            placeholder="Nome"
+            value={name}
+            onChange={e => {setName(e.target.value)}}
           />
           <input
             type="text"
-            id="email"
-            placeholder="E-mail"
-            value={email}
-            onChange={e => {setEmail(e.target.value)}}
+            id="sobrenome"
+            placeholder="Sobrenome"
+            value={surname}
+            onChange={e => {setSurname(e.target.value)}}
           />
+        </div>
 
-          <button type="submit">Cadastrar</button>
-        </form>
+        <input 
+          type="number"
+          id="numero"
+          placeholder="Num. Telefone"
+          value={phoneNumber}
+          onChange={e => {setPhoneNumber(e.target.value)}}
+        />
+        <input
+          type="text"
+          id="email"
+          placeholder="E-mail"
+          value={email}
+          onChange={e => {setEmail(e.target.value)}}
+        />
 
-        
+        <button type="submit">Cadastrar</button>
+      </form>
+
+      <div className={styles.regularBox}>
+        <h2>Lista de usuário:</h2>
+        <div className={styles.list}>
+          { users.map(user => {
+            return(
+              <li key={user.id}>
+                <div>
+                  <span>{user.name} </span>
+                  <span>{user.surname}</span>
+                </div>
+                <p>{user.email}</p>
+                <p>{user.phoneNumber}</p>
+              </li>
+            )
+          })}
+        </div>
+      </div>
+      
     </div>
   )
 }
