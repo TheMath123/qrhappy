@@ -1,6 +1,7 @@
 import { firebase, auth } from '../services/firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
+
 export function SignIn() {
 
   // Configure FirebaseUI.

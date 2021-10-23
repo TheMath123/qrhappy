@@ -16,6 +16,8 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+firebase.auth().languageCode = 'pt-br'
+
 const auth = firebase.auth();
 const database = firebase.database();
 
