@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom"
 import './styles/global.scss'
 
 //pages
-// import { Home } from "./pages/Home";
+import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 
 export default function App() {
@@ -13,6 +13,7 @@ export default function App() {
     <BrowserRouter>
         <Switch> 
           <Route path='/' exact component={Login}/>
+          <Route path='/home' exact component={Home}/>
         </Switch>
     </BrowserRouter>
   )
