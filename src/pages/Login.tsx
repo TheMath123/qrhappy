@@ -6,6 +6,7 @@ export function Login(){
 
   return(
     <div className={styles.container}>
+      <h2>Faça login:</h2>
       <SignIn />
     </div>
   )

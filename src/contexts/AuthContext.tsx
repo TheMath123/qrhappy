@@ -30,13 +30,7 @@ export function AuthContextProvider(props: AuthContextProviderProps){
       console.log(user)
 
       if(user){
-      
-        // const { displayName, photoURL, uid, phoneNumber, providerId} = user;
   
-        // if(!displayName || !photoURL){
-        //   throw new Error('Missing information from Google Account.')
-        // }
-        
         setUser(user);
         
         history.push('/home') //Caso o usuário estiver logado pula a tela de login.
