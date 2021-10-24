@@ -1,11 +1,13 @@
-import { FormEvent, useEffect, useState } from 'react'
-import styles from '../styles/Home.module.scss'
+import { FormEvent, useEffect, useState } from 'react';
+import styles from '../styles/Home.module.scss';
 
 import { database } from '../services/firebase';
 import { useUsers } from '../hooks/useUsers';
 
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+
+import imgDefaultAvatar from '../assets/avatar.svg'
 
 export function Home(){
   const history = useHistory() //Reedicionamento de pages
@@ -19,16 +21,6 @@ export function Home(){
 
   const { users } = useUsers()
 
-  useEffect(() => {
-    authentication()
-  }, [])
-
-  //Middleware de autentificação
-  function authentication(){
-    if(userLogged === null){
-      history.push('/')
-    }
-  }
 
   function logout(){
     authLogout()
@@ -56,13 +48,21 @@ export function Home(){
 
   }
 
+  function getImg(){
+
+    if(userLogged?.photoURL !== null){
+      return userLogged?.photoURL
+    }
+    return imgDefaultAvatar
+  }
+
+  
   return(
     <div className={styles.container}>
 
       <div className={styles.boxUserInfo}>
-        <img src={userLogged?.avatar} alt={userLogged?.name} />
-        <span>{userLogged?.name}</span>
-        <p>Logado com {userLogged?.providerId}</p>
+        <img src={getImg()} />
+        <span>{userLogged?.displayName ? userLogged?.displayName : userLogged?.phoneNumber}</span>
         <button onClick={logout}>Sair</button>
       </div>
 

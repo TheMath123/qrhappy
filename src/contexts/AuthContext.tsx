@@ -1,17 +1,12 @@
 //react
 import { createContext, ReactNode, useEffect, useState } from "react"
+import { useHistory } from "react-router-dom"
 
 //Firebase
 import { firebase, auth } from "../services/firebase"
 
 //Tipos
-type User = {
-  id: string;
-  name: string;
-  phoneNumber: string | null;
-  avatar: string;
-  providerId: string;
-}
+type User = firebase.User
 
 type AuthContextType = {
   user: User | undefined;
@@ -27,32 +22,30 @@ export const AuthContext = createContext({} as AuthContextType)
 
 //Provider
 export function AuthContextProvider(props: AuthContextProviderProps){
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<firebase.User>();
+  const history = useHistory()
 
-  useEffect(() => { //Indentifica o usuário logado
-    const unsubscribe = auth.onAuthStateChanged( user => {
+  useEffect(() => { //Identifica o usuário logado
+    auth.onAuthStateChanged( user => {
+      console.log(user)
 
       if(user){
-        
-        const { displayName, photoURL, uid, phoneNumber, providerId} = user;
+      
+        // const { displayName, photoURL, uid, phoneNumber, providerId} = user;
   
-        if(!displayName || !photoURL){
-          throw new Error('Missing information from Google Account.')
-        }
+        // if(!displayName || !photoURL){
+        //   throw new Error('Missing information from Google Account.')
+        // }
         
-        setUser({
-          id: uid,
-          name: displayName,
-          phoneNumber: phoneNumber,
-          avatar: photoURL,
-          providerId
-        });
+        setUser(user);
+        
+        history.push('/home') //Caso o usuário estiver logado pula a tela de login.
+      }else{
+        history.push('/') //Caso não estiver logado, retorna o usuário para tela de login.
       }
     })
-    return () => {
-     unsubscribe() 
-    }
-  }, [])
+
+  }, [history])
 
   function authLogout(){
     firebase.auth().signOut()
