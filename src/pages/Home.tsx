@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import styles from '../styles/Home.module.scss';
 
 import { database } from '../services/firebase';
@@ -53,6 +53,7 @@ export function Home(){
     if(userLogged?.photoURL !== null){
       return userLogged?.photoURL
     }
+
     return imgDefaultAvatar
   }
 
@@ -61,7 +62,7 @@ export function Home(){
     <div className={styles.container}>
 
       <div className={styles.boxUserInfo}>
-        <img src={getImg()} />
+        <img src={getImg()} alt="Imagem avatar"/>
         <span>{userLogged?.displayName ? userLogged?.displayName : userLogged?.phoneNumber}</span>
         <button onClick={logout}>Sair</button>
       </div>
