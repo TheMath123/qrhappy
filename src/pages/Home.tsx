@@ -19,7 +19,7 @@ export function Home(){
 
   const { user : userLogged, authLogout } = useAuth()
 
-  const users = await useUsers()
+  const users = useUsers()
   console.log(users)
 
   //Chamado para deslogar da conta

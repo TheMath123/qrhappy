@@ -30,19 +30,9 @@ export async function useUsers(){
   getUsersBD()
   
   async function getUsersBD(){
-    database.collection("cities").doc("SF")
-    .onSnapshot((doc) => {
-        const user = {
-        id: doc.id,
-        name: {
-          first: doc.data().name.first,
-          last: doc.data().name.last,
-        },
-        email: doc.data().email,
-        phoneNumber: doc.data().phoneNumber,
-        }
-        users.push(user)
-    });
+    const teste = await database.collection("cities").doc()
+    
+    console.log(teste.get())
   }
 
   return users;
