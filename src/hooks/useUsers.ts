@@ -1,5 +1,5 @@
 //React e Hook externos
-import { useEffect, useState } from "react"
+// import { useEffect, useState } from "react"
 
 //Database
 import { database } from '../services/firebase';
@@ -14,52 +14,36 @@ import { database } from '../services/firebase';
 
 type UsersType = {
   id: string,
+  name: {
+    first: string,
+    last: string,
+  },
   email: string,
-  name: string,
-  surname: string,
   phoneNumber: number
 }
 
 //Hook
 export async function useUsers(){
-  const [ users, setUsers ] = useState<UsersType[]>([])
+  // const [ users, setUsers ] = useState<UsersType[]>([])
+  const users:UsersType[] = [];
 
-  useEffect(()=>{
-    // const usersRef = database.ref('users/')
-
-    getUserDB();
-
-    // usersRef.on('value', room => { //Fica escutando alterações no banco de dados
-    //   const databaseUsers = room.val();
-    //   const firebaseUsers: FirebaseUsers = databaseUsers ?? {};
-
-
-    //   const parseUsers = Object.entries(firebaseUsers).map(([key, value]) => { //Converte o objeto em array
-    //     return {
-    //       id: key,
-    //       name: value.name,
-    //       surname: value.surname,
-    //       email: value.email,
-    //       phoneNumber: value.phoneNumber
-    //     }
-    //   })
-
-    //   setUsers(parseUsers)
-    // })
-
-    // return () => {
-    //   usersRef.off('value')
-    // }
-  },[])
-
-  async function getUserDB(){
-    await database.collection("users")
-    .get()
-    .then((querySnapshot: any) => setUsers(querySnapshot))
-    .catch((error: any) => {
-        console.log("Error getting documents: ", error);
+  getUsersBD()
+  
+  async function getUsersBD(){
+    database.collection("cities").doc("SF")
+    .onSnapshot((doc) => {
+        const user = {
+        id: doc.id,
+        name: {
+          first: doc.data().name.first,
+          last: doc.data().name.last,
+        },
+        email: doc.data().email,
+        phoneNumber: doc.data().phoneNumber,
+        }
+        users.push(user)
     });
   }
 
-  return { users };
+  return users;
 }

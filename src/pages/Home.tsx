@@ -19,7 +19,7 @@ export function Home(){
 
   const { user : userLogged, authLogout } = useAuth()
 
-  const users = useUsers()
+  const users = await useUsers()
   console.log(users)
 
   //Chamado para deslogar da conta
@@ -108,12 +108,12 @@ export function Home(){
       <div className={styles.regularBox}>
         <h2>Lista de usuário:</h2>
         <div className={styles.list}>
-          {/* { users.map(user => {
+          {/* { users != null && users.map(user => {
             return(
               <li key={user.id}>
                 <div>
-                  <span>{user.name} </span>
-                  <span>{user.surname}</span>
+                  <span>{user.name.first} </span>
+                  <span>{user.name.last}</span>
                 </div>
                 <p>{user.email}</p>
                 <p>{user.phoneNumber}</p>
