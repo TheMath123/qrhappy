@@ -3,7 +3,26 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 2rem;  
+  margin: 2rem; 
+  
+  .boxUserInfo {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    gap: 1rem;
+
+    img {
+      width: 3.125rem;
+      border-radius: 50%;
+      border: none;
+    }
+
+    span {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+  }
 
   .boxCreate {
     display: flex;

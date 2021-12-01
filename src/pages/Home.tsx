@@ -1,16 +1,32 @@
-import { FormEvent, useState } from 'react'
-import styles from '../styles/Home.module.scss'
+import { FormEvent, useState } from 'react';
+import styles from '../styles/Home.module.scss';
 
 import { database } from '../services/firebase';
 import { useUsers } from '../hooks/useUsers';
 
+import { useHistory } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
+
+import imgDefaultAvatar from '../assets/avatar.svg'
+
 export function Home(){
+  const history = useHistory() //Reedicionamento de pages
+
   const [ name, setName] = useState('')
   const [ surname, setSurname ] = useState('')
   const [ phoneNumber, setPhoneNumber ] = useState('')
   const [ email, setEmail ] = useState('')
 
+  const { user : userLogged, authLogout } = useAuth()
+
   const { users } = useUsers()
+
+
+  function logout(){
+    authLogout()
+    history.push('/')
+  }
+
 
   //Cadastrar pessoa
   function handlerSubmit(event: FormEvent) {
@@ -30,11 +46,26 @@ export function Home(){
       email
     });
 
-    console.log('Cadastrado com sucesso!')
   }
 
+  function getImg(){
+
+    if(userLogged?.photoURL !== null){
+      return userLogged?.photoURL
+    }
+
+    return imgDefaultAvatar
+  }
+
+  
   return(
     <div className={styles.container}>
+
+      <div className={styles.boxUserInfo}>
+        <img src={getImg()} alt="Imagem avatar"/>
+        <span>{userLogged?.displayName ? userLogged?.displayName : userLogged?.phoneNumber}</span>
+        <button onClick={logout}>Sair</button>
+      </div>
 
       <form className={styles.boxCreate} onSubmit={handlerSubmit}>
         <div className={styles.dName}>
