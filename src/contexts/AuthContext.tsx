@@ -27,10 +27,7 @@ export function AuthContextProvider(props: AuthContextProviderProps){
 
   useEffect(() => { //Identifica o usuário logado
     auth.onAuthStateChanged( user => {
-      console.log(user)
-
       if(user){
-  
         setUser(user);
         
         history.push('/home') //Caso o usuário estiver logado pula a tela de login.

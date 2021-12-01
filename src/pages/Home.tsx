@@ -19,14 +19,14 @@ export function Home(){
 
   const { user : userLogged, authLogout } = useAuth()
 
-  const { users } = useUsers()
+  const users = useUsers()
+  console.log(users)
 
-
+  //Chamado para deslogar da conta
   function logout(){
     authLogout()
     history.push('/')
   }
-
 
   //Cadastrar pessoa
   function handlerSubmit(event: FormEvent) {
@@ -37,17 +37,19 @@ export function Home(){
 
   //Salvar dado no bd
   async function writeUserData() {
-    const userRef = database.ref('users')
-
-    await userRef.push({
-      name,
-      surname,
+    await database.collection("users").add({
+      name: {
+        first: name,
+        last: surname,
+      },
       phoneNumber,
-      email
-    });
+      email, 
+    })
 
+    
   }
 
+  //Definir o avatar da conta 
   function getImg(){
 
     if(userLogged?.photoURL !== null){
@@ -57,7 +59,7 @@ export function Home(){
     return imgDefaultAvatar
   }
 
-  
+  //Pagina home
   return(
     <div className={styles.container}>
 
@@ -106,7 +108,7 @@ export function Home(){
       <div className={styles.regularBox}>
         <h2>Lista de usuário:</h2>
         <div className={styles.list}>
-          { users.map(user => {
+          {/* { users.map(user => {
             return(
               <li key={user.id}>
                 <div>
@@ -117,7 +119,7 @@ export function Home(){
                 <p>{user.phoneNumber}</p>
               </li>
             )
-          })}
+          })} */}
         </div>
       </div>
       

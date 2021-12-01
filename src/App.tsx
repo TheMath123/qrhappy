@@ -15,7 +15,7 @@ export default function App() {
       <AuthContextProvider>
         <Switch> 
           <Route path='/' exact component={Login}/>
-          <Route path='/home' exact component={Home}/>
+          <Route path='/home' component={Home}/>
         </Switch>
       </AuthContextProvider>
     </BrowserRouter>
